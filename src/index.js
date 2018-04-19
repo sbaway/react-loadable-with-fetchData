@@ -149,9 +149,12 @@ function createLoadableComponent(loadFn, options) {
       return init();
     }
 
-    static preFetch(...args) {
+    static fetchData(...args) {
       init().then(() => {
-        return res.loaded.preFetch(...args);
+        const fetchData = res.loaded && res.loaded.fetchData
+        if (typeof fetchData === 'function') {
+          return res.loaded.fetchData(...args);
+        }
       });
     };
 
